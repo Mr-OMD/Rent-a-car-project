@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.omertdemirel.rentacar.business.abstracts.BrandService;
+
 import com.omertdemirel.rentacar.business.dtos.ListBrandDto;
 import com.omertdemirel.rentacar.business.request.CreateBrandRequest;
+import com.omertdemirel.rentacar.business.request.DeleteBrandRequest;
+import com.omertdemirel.rentacar.business.request.UpdateBrandRequest;
 import com.omertdemirel.rentacar.core.utilities.mapping.ModelMapperService;
 import com.omertdemirel.rentacar.dataAccess.abstracts.BrandDao;
 import com.omertdemirel.rentacar.entities.concretes.Brand;
@@ -53,6 +56,23 @@ public class BrandManager implements BrandService{
 	private boolean doesExist(Brand brand) {
 
 		return Objects.nonNull(brandDao.getByBrandName(brand.getBrandName()));
+	}
+
+	@Override
+	public void update(UpdateBrandRequest updateBrandRequest) {
+		if (brandDao.existsById(updateBrandRequest.getBrandId())) {
+			Brand brand = modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
+			brandDao.save(brand);
+		}
+		
+	}
+
+	@Override
+	public void delete(DeleteBrandRequest deleteBrandRequest) {
+		if (brandDao.existsById(deleteBrandRequest.getBrandId())) {
+			brandDao.deleteById(deleteBrandRequest.getBrandId());
+		}
+		
 	}
 
 }
