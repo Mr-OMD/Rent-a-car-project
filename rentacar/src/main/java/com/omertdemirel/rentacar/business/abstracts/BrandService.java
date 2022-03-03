@@ -2,23 +2,26 @@ package com.omertdemirel.rentacar.business.abstracts;
 
 import java.util.List;
 
+import com.omertdemirel.rentacar.business.dtos.BrandDto;
 import com.omertdemirel.rentacar.business.dtos.ListBrandDto;
 import com.omertdemirel.rentacar.business.request.CreateBrandRequest;
 import com.omertdemirel.rentacar.business.request.DeleteBrandRequest;
 import com.omertdemirel.rentacar.business.request.UpdateBrandRequest;
+import com.omertdemirel.rentacar.core.utilities.results.DataResult;
+import com.omertdemirel.rentacar.core.utilities.results.Result;
 
 
 
 public interface BrandService {
 
-	List<ListBrandDto> getAll();
+	DataResult<List<ListBrandDto>> getAll();
 
-	void add(CreateBrandRequest createBrandRequest);
+	DataResult<BrandDto> getById(int id);
 
-	ListBrandDto getById(int id);
-	
-	void update(UpdateBrandRequest updateBrandRequest);
+	Result add(CreateBrandRequest createBrandRequest);
 
-	void delete(DeleteBrandRequest deleteBrandRequest);
+	Result update(UpdateBrandRequest updateBrandRequest);
+
+	Result delete(DeleteBrandRequest deleteBrandRequest);
 
 }
