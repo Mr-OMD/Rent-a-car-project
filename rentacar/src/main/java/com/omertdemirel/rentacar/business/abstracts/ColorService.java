@@ -7,16 +7,18 @@ import com.omertdemirel.rentacar.business.dtos.ListColorDto;
 import com.omertdemirel.rentacar.business.request.CreateColorRequest;
 import com.omertdemirel.rentacar.business.request.DeleteColorRequest;
 import com.omertdemirel.rentacar.business.request.UpdateColorRequest;
+import com.omertdemirel.rentacar.core.utilities.results.DataResult;
+import com.omertdemirel.rentacar.core.utilities.results.Result;
 
 public interface ColorService {
 
-	List<ListColorDto> getAll();
+	DataResult<List<ListColorDto>> getAll();
 
-	ColorDto add(CreateColorRequest createColorRequest);
+	DataResult<ColorDto> getById(int id);
 
-	ColorDto getById(int id);
+	Result add(CreateColorRequest createColorRequest);
+
+	Result delete(DeleteColorRequest deleteColorRequest);
 	
-	void delete(DeleteColorRequest deleteColorRequest);
-	
-	void update(UpdateColorRequest updateColorRequest);
+	Result update(UpdateColorRequest updateColorRequest);
 }
