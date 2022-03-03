@@ -2,6 +2,7 @@ package com.omertdemirel.rentacar.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,8 @@ import com.omertdemirel.rentacar.business.dtos.ListCarDto;
 import com.omertdemirel.rentacar.business.request.CreateCarRequest;
 import com.omertdemirel.rentacar.business.request.DeleteCarRequest;
 import com.omertdemirel.rentacar.business.request.UpdateCarRequest;
+import com.omertdemirel.rentacar.core.utilities.results.DataResult;
+import com.omertdemirel.rentacar.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -31,33 +34,43 @@ public class CarController {
 	}
 
 	@GetMapping("/getall")
-	public List<ListCarDto> getAll() {
+	public DataResult<List<ListCarDto>> getAll() {
 		return carService.getAll();
 	}
 
 	@GetMapping("/get")
-	public CarDto get(@RequestParam int id) {
+	public DataResult<CarDto> get(@RequestParam int id) {
 		return carService.getById(id);
 	}
 
 	@PostMapping("/save")
-	public void add(@RequestBody CreateCarRequest createCarRequest) {
-		carService.add(createCarRequest);
+	public Result add(@RequestBody CreateCarRequest createCarRequest) {
+		return carService.add(createCarRequest);
 	}
 
 	@DeleteMapping("/delete")
-	public void delete(@RequestBody DeleteCarRequest deleteCarRequest) {
-		carService.delete(deleteCarRequest);
-	}
-	
-	@DeleteMapping("/delete/{cardId}")
-	public void delete(@PathVariable int carId) {
-		carService.delete(carId);
+	public Result delete(@RequestBody DeleteCarRequest deleteCarRequest) {
+		return carService.delete(deleteCarRequest);
 	}
 
 	@PutMapping("/update")
-	public void delete(@RequestBody UpdateCarRequest updateCarRequest) {
-		carService.update(updateCarRequest);
+	public Result delete(@RequestBody UpdateCarRequest updateCarRequest) {
+		return carService.update(updateCarRequest);
+	}
+
+	@GetMapping("/getByDailyPriceLessThanEqual")
+	public DataResult<List<ListCarDto>> getByDailyPriceLessThanEqual(double maxDailyPrice) {
+		return carService.getByDailyPriceLessThan(maxDailyPrice);
+	}
+
+	@GetMapping("/getAllSorted")
+	public DataResult<List<ListCarDto>> getAllSorted(Sort.Direction direction) {
+		return carService.getAllSorted(direction);
+	}
+
+	@GetMapping("/getAllPaged")
+	public DataResult<List<ListCarDto>> getAllPaged(int pageNo, int pageSize) {
+		return carService.getAllPaged(pageNo, pageSize);
 	}
 
 }

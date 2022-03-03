@@ -20,6 +20,8 @@ import com.omertdemirel.rentacar.business.dtos.ListColorDto;
 import com.omertdemirel.rentacar.business.request.CreateColorRequest;
 import com.omertdemirel.rentacar.business.request.DeleteColorRequest;
 import com.omertdemirel.rentacar.business.request.UpdateColorRequest;
+import com.omertdemirel.rentacar.core.utilities.results.DataResult;
+import com.omertdemirel.rentacar.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/colors")
@@ -33,32 +35,28 @@ public class ColorController {
 	}
 
 	@GetMapping("/getall")
-	public List<ListColorDto> getAll() {
+	public DataResult<List<ListColorDto>> getAll() {
 		return colorService.getAll();
 	}
 
-	@PostMapping("/save")
-	public ResponseEntity<ColorDto> add(@RequestBody CreateColorRequest createColorRequest) {
-		ColorDto result = null;
-		try {
-			result = colorService.add(createColorRequest);
-		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<ColorDto>(HttpStatus.CONFLICT);
-		}
-		return new ResponseEntity<ColorDto>(result, HttpStatus.OK);
-	}
-
 	@GetMapping("/get")
-	public ColorDto get(@RequestParam int id) {
+	public DataResult<ColorDto> get(@RequestParam int id) {
 		return colorService.getById(id);
 	}
-	@DeleteMapping
-	public void delete(@RequestBody DeleteColorRequest deleteColorRequest) {
-		colorService.delete(deleteColorRequest);
+
+	@PostMapping("/save")
+	public Result add(@RequestBody CreateColorRequest createColorRequest) {
+		return colorService.add(createColorRequest);
 	}
+
+	@DeleteMapping
+	public Result delete(@RequestBody DeleteColorRequest deleteColorRequest) {
+		return colorService.delete(deleteColorRequest);
+	}
+
 	@PutMapping
-	public void update(@RequestBody UpdateColorRequest updateColorRequest) {
-		colorService.update(updateColorRequest);
+	public Result update(@RequestBody UpdateColorRequest updateColorRequest) {
+		return colorService.update(updateColorRequest);
 	}
 
 }

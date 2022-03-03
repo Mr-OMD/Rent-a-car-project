@@ -13,16 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.omertdemirel.rentacar.business.abstracts.BrandService;
+import com.omertdemirel.rentacar.business.dtos.BrandDto;
 import com.omertdemirel.rentacar.business.dtos.ListBrandDto;
 import com.omertdemirel.rentacar.business.request.CreateBrandRequest;
 import com.omertdemirel.rentacar.business.request.DeleteBrandRequest;
 import com.omertdemirel.rentacar.business.request.UpdateBrandRequest;
+import com.omertdemirel.rentacar.core.utilities.results.DataResult;
+import com.omertdemirel.rentacar.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/brands")
 public class BrandController {
 
-	private BrandService brandService;
+	private final BrandService brandService;
 
 	@Autowired
 	public BrandController(BrandService brandService) {
@@ -30,27 +33,28 @@ public class BrandController {
 	}
 
 	@GetMapping("/getall")
-	public List<ListBrandDto> getAll() {
+	public DataResult<List<ListBrandDto>> getAll() {
 		return brandService.getAll();
 	}
 
-	@PostMapping("/save")
-	public void add(@RequestBody CreateBrandRequest createBrandRequest) {
-		this.brandService.add(createBrandRequest);
-	}
-
 	@GetMapping("/get")
-	public ListBrandDto get(@RequestParam int id) {
+	public DataResult<BrandDto> get(@RequestParam int id) {
 		return brandService.getById(id);
 	}
-	
-	@DeleteMapping("/delete")
-	public void delete(@RequestBody DeleteBrandRequest deleteBrandRequest) {
-		brandService.delete(deleteBrandRequest);
+
+	@PostMapping("/save")
+	public Result add(@RequestBody CreateBrandRequest createBrandRequest) {
+		return brandService.add(createBrandRequest);
 	}
+
+	@DeleteMapping("/delete")
+	public Result delete(@RequestBody DeleteBrandRequest deleteBrandRequest) {
+		return brandService.delete(deleteBrandRequest);
+	}
+
 	@PutMapping("/update")
-	public void update(@RequestBody UpdateBrandRequest updateBrandRequest) {
-		brandService.update(updateBrandRequest);
+	public Result update(@RequestBody UpdateBrandRequest updateBrandRequest) {
+		return brandService.update(updateBrandRequest);
 	}
 
 }
