@@ -49,12 +49,12 @@ public class ColorController {
 		return colorService.add(createColorRequest);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/delete")
 	public Result delete(@RequestBody DeleteColorRequest deleteColorRequest) {
 		return colorService.delete(deleteColorRequest);
 	}
 
-	@PutMapping
+	@PutMapping("/update")
 	public Result update(@RequestBody UpdateColorRequest updateColorRequest) {
 		return colorService.update(updateColorRequest);
 	}
