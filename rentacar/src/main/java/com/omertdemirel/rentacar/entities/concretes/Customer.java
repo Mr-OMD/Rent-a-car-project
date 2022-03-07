@@ -1,14 +1,13 @@
 package com.omertdemirel.rentacar.entities.concretes;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -18,20 +17,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "car_maintenances")
+@Table(name = "customers")
 @Entity
-public class CarMaintenance {
+public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "maintenance_id")
-	private int maintenanceId;
-	@Column(name = "maintenance_description")
-	private String maintenanceDescription;
-	@Column(name = "return_date")
-	private LocalDateTime returnDate;
-	@ManyToOne
-	@JoinColumn(name = "car_id")
-	private Car car;
+	@Column(name = "customer_id")
+	private int customerId;
+
+	@OneToMany(mappedBy = "customer")
+	private List<Rental> rentals;
 
 }
