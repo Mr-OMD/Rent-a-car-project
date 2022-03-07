@@ -27,14 +27,14 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
 	private final CarMaintenanceDao carMaintenanceDao;
 	private final ModelMapperService modelMapperService;
-	//private final CarDao carDao;
+	private final CarDao carDao;
 
 	@Autowired
 	public CarMaintenanceManager(CarMaintenanceDao carMaintenanceDao, ModelMapperService modelMapperService,
 			CarDao carDao) {
 		this.carMaintenanceDao = carMaintenanceDao;
 		this.modelMapperService = modelMapperService;
-		//this.carDao = carDao;
+		this.carDao = carDao;
 	}
 
 	@Override
@@ -57,11 +57,17 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
 	@Override
 	public Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) {
-		//CarMaintenance maintenance = new CarMaintenance();
-		CarMaintenance carMaintenance = modelMapperService.forRequest().map(createCarMaintenanceRequest,
-				CarMaintenance.class);
-		System.err.println(carMaintenance.toString());
-		carMaintenanceDao.save(carMaintenance);
+
+		CarMaintenance maintenance = new CarMaintenance();
+		maintenance.setCar(carDao.getById(createCarMaintenanceRequest.getCarId()));
+		maintenance.setMaintenanceDescription(createCarMaintenanceRequest.getMaintenanceDescription());
+//		maintenance.setReturnDate(createCarMaintenanceRequest.getReturnDate());
+		carMaintenanceDao.save(maintenance);
+		//TODO 					MANUEL EKLEME(Oguzhana tekrar sor)
+//		CarMaintenance carMaintenance = modelMapperService.forRequest().map(createCarMaintenanceRequest,
+//				CarMaintenance.class);
+//		System.err.println(carMaintenance.toString());
+//		carMaintenanceDao.save(carMaintenance);
 		return new SuccessResult();
 	}
 
