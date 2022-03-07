@@ -1,8 +1,10 @@
 package com.omertdemirel.rentacar.business.concretes;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -30,6 +32,7 @@ public class CarManager implements CarService {
 	private final CarDao carDao;
 	private final ModelMapperService modelMapperService;
 
+	@Autowired
 	public CarManager(CarDao carDao, ModelMapperService modelMapperService) {
 		this.carDao = carDao;
 		this.modelMapperService = modelMapperService;
@@ -77,7 +80,7 @@ public class CarManager implements CarService {
 	}
 
 	@Override
-	public DataResult<List<ListCarDto>> getByDailyPriceLessThan(double maxDailyPrice) {
+	public DataResult<List<ListCarDto>> getByDailyPriceLessThan(BigDecimal maxDailyPrice) {
 		var result = carDao.getByDailyPriceLessThanEqual(maxDailyPrice);
 
 		List<ListCarDto> response = result.stream().map(car -> modelMapperService.forDto().map(car, ListCarDto.class))

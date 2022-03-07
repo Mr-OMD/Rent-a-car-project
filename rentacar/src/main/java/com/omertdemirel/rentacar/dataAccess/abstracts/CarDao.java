@@ -1,5 +1,6 @@
 package com.omertdemirel.rentacar.dataAccess.abstracts;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,5 +10,5 @@ import com.omertdemirel.rentacar.entities.concretes.Car;
 
 @Repository
 public interface CarDao extends JpaRepository<Car, Integer> {
-	List<Car> getByDailyPriceLessThanEqual(double dailyPrice);
+	List<Car> getByDailyPriceLessThanEqual(BigDecimal dailyPrice);
 }
