@@ -1,6 +1,6 @@
 package com.omertdemirel.rentacar.business.request;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateCarRequest {
+public class UpdateCarMaintenanceRequest {
 
-	private BigDecimal dailyPrice;
-	private int modelYear;
-	private String description;
-	private int brandId;
-	private int colorId;
+	private int maintenanceId;
+	private String maintenanceDescription;
+	private LocalDateTime returnDate;
 }

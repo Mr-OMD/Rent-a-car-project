@@ -1,6 +1,6 @@
 package com.omertdemirel.rentacar.business.dtos;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,13 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListCarDto {
+public class CarMaintenanceDto {
+
+	private String maintenanceDescription;
+	private LocalDateTime returnDate;
 
 	private int carId;
-	private BigDecimal dailyPrice;
-	private int modelYear;
-	private String description;
-
-	private String brandName;
-	private String colorName;
 }
