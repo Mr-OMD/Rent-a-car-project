@@ -1,7 +1,6 @@
 package com.omertdemirel.rentacar.entities.concretes;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +28,7 @@ public class CarMaintenance {
 	@Column(name = "maintenance_description")
 	private String maintenanceDescription;
 	@Column(name = "return_date")
-	private LocalDateTime returnDate;
+	private LocalDate returnDate;
 	@ManyToOne
 	@JoinColumn(name = "car_id")
 	private Car car;
