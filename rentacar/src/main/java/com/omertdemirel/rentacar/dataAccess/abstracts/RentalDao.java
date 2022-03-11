@@ -9,4 +9,5 @@ import com.omertdemirel.rentacar.entities.concretes.Rental;
 public interface RentalDao extends JpaRepository<Rental, Integer> {
 
 	Rental getByCarCarId(int id);
+	Rental findFirstByCarCarIdOrderByRentDate(int carId);
 }
