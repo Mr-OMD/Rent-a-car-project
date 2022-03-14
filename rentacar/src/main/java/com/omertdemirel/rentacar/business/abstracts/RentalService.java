@@ -7,6 +7,7 @@ import com.omertdemirel.rentacar.business.dtos.RentalDto;
 import com.omertdemirel.rentacar.business.request.CreateRentalRequest;
 import com.omertdemirel.rentacar.business.request.DeleteRentalRequest;
 import com.omertdemirel.rentacar.business.request.UpdateRentalRequest;
+import com.omertdemirel.rentacar.core.utilities.exceptions.BusinessException;
 import com.omertdemirel.rentacar.core.utilities.results.DataResult;
 import com.omertdemirel.rentacar.core.utilities.results.Result;
 
@@ -22,4 +23,7 @@ public interface RentalService {
 
 	Result delete(DeleteRentalRequest deleteRentalRequest);
 
+	DataResult<List<ListRentalDto>> getAllByCar(int id) throws BusinessException;
+
+	boolean isCarAlreadyRented(int carId);
 }
