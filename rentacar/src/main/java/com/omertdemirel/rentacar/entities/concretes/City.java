@@ -1,4 +1,4 @@
-/*package com.omertdemirel.rentacar.entities.concretes;
+package com.omertdemirel.rentacar.entities.concretes;
 
 import java.util.List;
 
@@ -17,16 +17,23 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "customers")
+@Table(name = "cities")
 @Entity
-public class Customer {
-
+public class City {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "customer_id")
-	private int customerId;
+	@Column(name = "city_id")
+	private int id;
 
-	@OneToMany(mappedBy = "customer")
-	private List<Rental> rentals;
+	@Column(name = "city_name")
+	private String cityName;
 
-}*/
+	@OneToMany(mappedBy = "city")
+	private List<Car> cars;
+
+	@OneToMany(mappedBy = "rentCity")
+	private List<Rental> rentCityRentals;
+
+	@OneToMany(mappedBy = "returnCity")
+	private List<Rental> returnCityRentals;
+}
