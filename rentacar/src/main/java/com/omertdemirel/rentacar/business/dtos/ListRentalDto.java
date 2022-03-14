@@ -1,5 +1,7 @@
 package com.omertdemirel.rentacar.business.dtos;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +13,13 @@ import lombok.NoArgsConstructor;
 public class ListRentalDto {
 
 	private int rentId;
-	private LocalDateTime rentDate;
-	private LocalDateTime returnDate;
+	private LocalDate rentDate;
+	private LocalDate returnDate;
+	private String rentCityName;
+	private String returnCityName;
+	private List<ListAdditionalServiceDto> additionalServices;
+	private BigDecimal rentalDailyPrice;
+	private int customerId;
 	private int carId;
+
 }
