@@ -38,17 +38,25 @@ public class Car {
 	@ManyToOne
 	@JoinColumn(name = "brand_id")
 	private Brand brand;
+
 	@ManyToOne
 	@JoinColumn(name = "color_id")
 	private Color color;
-	
+
+	@Column(name = "kilometer")
+	private double kilometer;
+
 	@ManyToOne
 	@JoinColumn(name = "city_id")
 	private City city;
 
 	@OneToMany(mappedBy = "car")
 	private List<CarMaintenance> carMaintenances;
-	
+
 	@OneToMany(mappedBy = "car")
 	private List<Rental> rentals;
+
+	@OneToMany(mappedBy = "car")
+	private List<CarAccident> carAccidents;
+
 }

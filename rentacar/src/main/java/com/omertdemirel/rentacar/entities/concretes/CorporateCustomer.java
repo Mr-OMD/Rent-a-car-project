@@ -2,9 +2,7 @@ package com.omertdemirel.rentacar.entities.concretes;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.omertdemirel.rentacar.entities.abstracts.Customer;
 
@@ -16,12 +14,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "corporate_customers")
+@PrimaryKeyJoinColumn(name = "customer_id")
 public class CorporateCustomer extends Customer {
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+	@Column(name = "customer_id")
+	private int customerId;
 
 	@Column(name = "corporate_name")
 	private String corporateName;
