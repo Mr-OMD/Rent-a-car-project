@@ -5,10 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.omertdemirel.rentacar.entities.abstracts.Customer;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -16,11 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "individual_customers")
-@PrimaryKeyJoinColumn(name = "customer_id")
+@EqualsAndHashCode(callSuper = false)
+@PrimaryKeyJoinColumn(name = "user_id")
 public class IndividualCustomer extends Customer {
-
+	
 	@Column(name = "national_identity", unique = true)
-	private String nationalIdentity;
+	private String nationalId;
 
 	@Column(name = "firstname")
 	private String firstname;

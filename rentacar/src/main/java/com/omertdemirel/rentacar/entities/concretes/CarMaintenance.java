@@ -1,6 +1,7 @@
 package com.omertdemirel.rentacar.entities.concretes;
 
 import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,20 +18,24 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "car_maintenances")
 @Entity
+@Table(name="car_maintenances")
 public class CarMaintenance {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "maintenance_id")
-	private int maintenanceId;
-	@Column(name = "maintenance_description")
-	private String maintenanceDescription;
+	@Column(name = "car_maintenance_id", unique = true)
+	private int carMaintenanceId;
+
+	@ManyToOne()
+	@JoinColumn(name = "car_id")
+	private Car carMaintenanceCar;
+
+	@Column(name = "description")
+	private String carMaintenanceDescription;
+
+	@Column(name = "maintenance_date")
+	private LocalDate maintenanceDate;
+
 	@Column(name = "return_date")
 	private LocalDate returnDate;
-	@ManyToOne
-	@JoinColumn(name = "car_id")
-	private Car car;
-
 }

@@ -17,17 +17,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "brands")
+@Table(name="brands")
 @Entity
 public class Brand {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "brand_id")
+	@Column(name="brand_id", nullable = false, unique = true)
 	private int brandId;
-	@Column(name = "brand_name", unique = true)
+	
+	@Column(name="brand_name", nullable = false, unique = true, length = 50)
 	private String brandName;
-
-	@OneToMany(mappedBy = "brand")
+	
+	@OneToMany(mappedBy="brand")
 	private List<Car> cars;
 }

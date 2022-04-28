@@ -17,18 +17,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "car_accident")
-public class CarAccident {
+@Table(name = "damages")
+public class Damage {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
-
-	@Column(name = "description")
-	private String description;
-
-	@ManyToOne
+	@Column(name = "damage_id")
+	private int damageId;
+	
+	@Column(name = "damage_description")
+	private String damageDescription;
+	
+	@ManyToOne()
 	@JoinColumn(name = "car_id")
-	private Car car;
-
+	private Car damagedCar;
 }

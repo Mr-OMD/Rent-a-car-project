@@ -1,7 +1,6 @@
 package com.omertdemirel.rentacar.entities.concretes;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.omertdemirel.rentacar.entities.abstracts.Customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,38 +20,42 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Invoices")
+@Table(name="Invoices")
 @Entity
 public class Invoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "invoice_no")
+	@Column(name="invoice_no")
 	private int invoiceNo;
-
-	@Column(name = "billing_date")
-	private LocalDate billingDate;
-
+	
+	@Column(name = "invoice_number")
+	private String invoiceNumber;
+	
+	@Column(name = "create_date")
+	private LocalDate createDate;
+	
 	@Column(name = "rent_date")
 	private LocalDate rentDate;
-
+	
 	@Column(name = "return_date")
 	private LocalDate returnDate;
-
-	@Column(name = "total_rent_day")
-	private long totalRentDay;
-
-	@Column(name = "total_price")
-	private BigDecimal totalPrice;
-
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private Customer customer;
-
+	
+	@Column(name = "rented_days")
+	private int rentedDays;
+	
+	@Column(name = "rent_total_price")
+	private double rentTotalPrice;
+	
 	@OneToOne()
-	@JoinColumn(name = "rent_id")
-	private Rental rental;
-
-	@OneToOne(mappedBy = "invoice")
-	private Payment payment;
-
+	@JoinColumn(name = "rental_id")
+	private Rental invoiceRental;
+	
+	@ManyToOne()
+	@JoinColumn(name = "customer_id")
+	private Customer invoiceCustomer;
+	
+	@OneToOne()
+	@JoinColumn(name = "payment_id")
+	private Payment invoicePayment;
+	
 }

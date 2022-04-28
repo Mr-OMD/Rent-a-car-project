@@ -1,6 +1,6 @@
 package com.omertdemirel.rentacar.entities.concretes;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -15,16 +16,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
-@AllArgsConstructor
+@Entity
 @NoArgsConstructor
-@Table(name = "additional_service")
-public class AdditionalService {
+@AllArgsConstructor
+@Table(name = "additional_services")
 
+public class AdditionalService {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "additional_service_id")
+	@Column(name = "additional_service_id", unique = true)
 	private int additionalServiceId;
 
 	@Column(name = "additional_service_name")
@@ -32,11 +34,10 @@ public class AdditionalService {
 
 	@Column(name = "additional_service_description")
 	private String additionalServiceDescription;
-
+	
 	@Column(name = "additional_service_daily_price")
-	private BigDecimal additionalServiceDailyPrice;
+	private double additionalServiceDailyPrice;
 
-	@ManyToOne
-	@JoinColumn(name = "rental_id")
-	private Rental rental;
+	@ManyToMany(mappedBy = "rentalAdditionalServices")
+	private List<Rental> additionalServiceRental;
 }

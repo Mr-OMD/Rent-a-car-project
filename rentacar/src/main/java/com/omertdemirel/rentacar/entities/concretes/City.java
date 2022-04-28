@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,23 +18,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "cities")
+@Table(name="cities")
 @Entity
 public class City {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "city_id")
-	private int id;
-
+	@Column(name = "city_plate", unique = true)
+	private int cityPlate;
+	
 	@Column(name = "city_name")
 	private String cityName;
-
-	@OneToMany(mappedBy = "city")
-	private List<Car> cars;
-
-	@OneToMany(mappedBy = "fromCity")
-	private List<Rental> fromCityRentals;
-
-	@OneToMany(mappedBy = "toCity")
-	private List<Rental> toCityRentals;
+	
+	@OneToMany(mappedBy = "currentCity", fetch = FetchType.LAZY)
+	private List<Rental> rentalCurrentCities;
+	
+	@OneToMany(mappedBy = "returnCity", fetch = FetchType.LAZY)
+	private List<Rental> rentalReturnCities;
 }
