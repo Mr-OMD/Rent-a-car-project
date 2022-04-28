@@ -8,5 +8,9 @@ import com.omertdemirel.rentacar.entities.concretes.CorporateCustomer;
 
 @Repository
 public interface CorporateCustomerDao extends JpaRepository<CorporateCustomer, Integer> {
-
+	boolean existsByCorporateName(String corporateName);
+	
+	boolean existsByTaxNo(String taxNo);
+	
+	CorporateCustomer getByCorporateName(String corporateName);
 }

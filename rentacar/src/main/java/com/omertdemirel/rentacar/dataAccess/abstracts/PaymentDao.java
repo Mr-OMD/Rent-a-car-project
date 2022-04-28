@@ -8,7 +8,11 @@ import com.omertdemirel.rentacar.entities.concretes.Payment;
 
 public interface PaymentDao extends JpaRepository<Payment, Integer> {
 
-	List<Payment> getByCardOwnerName(String cardOwnerName);
-
-	List<Payment> getByCardNumber(String cardNumber);
+	boolean existsByPaymentId(int paymentId);
+	
+	Payment getByPaymentId(int paymentId);
+	
+	List<Payment> getByPaymentRental_RentalId(int rentalId);
+	
+	Payment getByPaymentInvoice_InvoiceId(int invoiceId);
 }
