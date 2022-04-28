@@ -1,5 +1,6 @@
 package com.omertdemirel.rentacar.business.dtos;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -11,8 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CarMaintenanceDto {
 
-	private String maintenanceDescription;
-	private LocalDateTime returnDate;
-
-	private int carId;
+	private String description;
+	
+	private LocalDate maintenanceDate;
+	
+	private LocalDate returnDate;
+	
+	private CarDto car;
 }

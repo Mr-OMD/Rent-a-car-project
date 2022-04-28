@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CityDto {
 
-	private int id;
+	//private int id;
 	private String cityName;
-	private List<Car> cars;
-	private List<Rental> rentCityRentals;
-	private List<Rental> returnCityRentals;
+	//private List<Car> cars;
+	//private List<Rental> rentCityRentals;
+	//private List<Rental> returnCityRentals;
 }

@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ColorDto {
-
-	//private int colorId;
-	private String colorName;
-
+public class PaymentDto {
+										//rental sorunu???
+	private RentalDto paymentRental;
+	
+	private CreditCardDto paymentCard;
 }

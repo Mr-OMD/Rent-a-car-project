@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ColorDto {
+public class ListDamageDto {
 
-	//private int colorId;
-	private String colorName;
-
+	private int damageId;
+	
+	private String damageDescription;
 }

@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdditionalServiceDto {
 
-	private int additionalId;
-	private String additional_service_name;
-	private int dailyPrice;
-	private int rentalId;
+	private String additionalServiceName;
+	
+	private String additionalServiceDescription;
+	
+	private double additionalServiceDailyPrice;
 }

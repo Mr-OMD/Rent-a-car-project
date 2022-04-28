@@ -1,5 +1,7 @@
 package com.omertdemirel.rentacar.business.dtos;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ListCorporateCustomerDto {
 
-	private int id;
+	private int corporateCustomerId;
 	private String corporateName;
 	private String taxNo;
 	private String email;
 	private String password;
+	private LocalDate registeredDate;
 }
