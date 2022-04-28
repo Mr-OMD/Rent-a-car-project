@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.omertdemirel.rentacar.business.dtos.AdditionalServiceIdDto;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateRentalRequest {
+public class CreateDelayedDeliveryRequest {
 
 	@NotNull
 	private int carId;
@@ -25,8 +24,8 @@ public class CreateRentalRequest {
 	@NotNull
 	private int customerId;
 	
-	@JsonIgnore
-	private LocalDate rentalDate;
+	@NotNull
+	private LocalDate rentDate;
 	
 	@NotNull
 	private LocalDate returnDate;
@@ -40,6 +39,5 @@ public class CreateRentalRequest {
 	@Nullable
 	private List<AdditionalServiceIdDto> additionalServicesIds;
 	
-	@JsonIgnore
-	private double totalPrice;
+	private double totalDailyPrice;
 }

@@ -1,8 +1,13 @@
 package com.omertdemirel.rentacar.business.request;
 
-import javax.validation.constraints.Min;
+import java.time.LocalDate;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +18,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateCarMaintenanceRequest {
 
-	@NotEmpty(message = "Maintenance Description should not be null or empty")
-	@Size(min = 3, message = "Maintenance Description should have at least 3 characters")
-	private String maintenanceDescription;
-	@Min(value = 1, message = "Car id should be positive integer")
+	@NotNull
 	private int carId;
+
+	@NotNull
+	@NotEmpty
+	@NotBlank
+	@Size(min = 2, max = 150)
+	private String description;
+
+	@Nullable
+	private LocalDate returnDate;
 
 }

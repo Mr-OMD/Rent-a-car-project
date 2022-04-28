@@ -3,9 +3,12 @@ package com.omertdemirel.rentacar.business.request;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.lang.Nullable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.omertdemirel.rentacar.business.dtos.AdditionalServiceIdDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,31 +19,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateRentalRequest {
 
-	@Min(value = 1, message = "Rent id should be positive integer")
-	private int rentId;
-
-	@NotEmpty
-	private LocalDate rentDate;
+	@NotNull
+	private int rentalId;
 
 	@NotNull
+	private int carId;
+	
+	@NotNull
+	private int returnKilometer;
+
+	@NotNull
+	private int customerId;
+	
+	@JsonIgnore
+	private LocalDate rentalDate;
+
+	@Nullable
 	private LocalDate returnDate;
 
-	@NotEmpty
-	@Min(value = 1)
-	private int carId;
+	@NotNull
+	private int currentCityPlate;
 
-	@NotEmpty
-	@Min(value = 1)
-	private int customerId;
+	@Nullable
+	private int returnCityPlate;
 
-	@NotEmpty
-	@Min(value = 1)
-	private int rentCityId;
-
-	@NotEmpty
-	@Min(value = 1)
-	private int returnCityId;
-
-	private List<Integer> additionalServiceId;
-
+	@Nullable
+	private List<AdditionalServiceIdDto> additionalServicesIds;
 }
