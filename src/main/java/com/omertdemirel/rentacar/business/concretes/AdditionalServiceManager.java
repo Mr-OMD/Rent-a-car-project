@@ -141,8 +141,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 	@Override
 	public List<AdditionalService> getByRentalId(int rentalId){
 		
-		List<AdditionalService> additionalServices = this.additionalServiceDao.getAllByRental(rentalId);
-			
+		List<AdditionalService> additionalServices = this.additionalServiceDao.findAllByAdditionalServiceRental_RentalId(rentalId);
 		
 		return additionalServices;
 	}
