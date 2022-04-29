@@ -1,18 +1,21 @@
 package com.omertdemirel.rentacar.business.concretes;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.omertdemirel.rentacar.business.abstracts.AdditionalServiceService;
-import com.omertdemirel.rentacar.business.abstracts.RentalService;
+import com.omertdemirel.rentacar.business.constants.Messages;
 import com.omertdemirel.rentacar.business.dtos.AdditionalServiceDto;
 import com.omertdemirel.rentacar.business.dtos.ListAdditionalServiceDto;
 import com.omertdemirel.rentacar.business.request.CreateAdditionalServiceRequest;
-import com.omertdemirel.rentacar.business.request.DeleteAdditionalServiceRequest;
 import com.omertdemirel.rentacar.business.request.UpdateAdditionalServiceRequest;
 import com.omertdemirel.rentacar.core.utilities.exceptions.BusinessException;
 import com.omertdemirel.rentacar.core.utilities.mapping.ModelMapperService;
@@ -26,83 +29,149 @@ import com.omertdemirel.rentacar.entities.concretes.AdditionalService;
 @Service
 public class AdditionalServiceManager implements AdditionalServiceService {
 
-	private ModelMapperService modelMapperService;
 	private AdditionalServiceDao additionalServiceDao;
-	private RentalService rentalService;
+	private ModelMapperService modelMapperService;
 
 	@Autowired
-	public AdditionalServiceManager(ModelMapperService modelMapperService, AdditionalServiceDao additionalServiceDao,
-			RentalService rentalService) {
-		this.modelMapperService = modelMapperService;
+	public AdditionalServiceManager(AdditionalServiceDao additionalServiceDao,
+			ModelMapperService modelMapperService) {
+		
 		this.additionalServiceDao = additionalServiceDao;
-		this.rentalService = rentalService;
+		this.modelMapperService = modelMapperService;
 	}
 
 	@Override
-	public DataResult<List<ListAdditionalServiceDto>> getAll() {
-		List<AdditionalService> result = additionalServiceDao.findAll();
-		List<ListAdditionalServiceDto> response = result.stream().map(
-				additionalService -> modelMapperService.forDto().map(additionalService, ListAdditionalServiceDto.class))
-				.collect(Collectors.toList());
-		return new SuccessDataResult<List<ListAdditionalServiceDto>>(response);
+	public Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest){
+		
+		checkAdditionalServiceIdExists(updateAdditionalServiceRequest.getAdditionalServiceId());
+		checkAdditionalServiceNameExists(updateAdditionalServiceRequest.getAdditionalServiceName());
+		
+		AdditionalService additionalService = this.modelMapperService.forRequest()
+			.map(updateAdditionalServiceRequest, AdditionalService.class);
+		this.additionalServiceDao.save(additionalService);
+		
+		return new SuccessDataResult<UpdateAdditionalServiceRequest>(updateAdditionalServiceRequest,
+			Messages.ADDITIONALSERVICEUPDATED + additionalService.getAdditionalServiceName());
 	}
 
 	@Override
-	public DataResult<List<ListAdditionalServiceDto>> getAllByRentId(int rentId) {
-		List<AdditionalService> result = additionalServiceDao.getAllByRental(rentId);
-
-		List<ListAdditionalServiceDto> response = result.stream()
-				.map(rentalService -> modelMapperService.forDto().map(rentalService, ListAdditionalServiceDto.class))
-				.collect(Collectors.toList());
-
-		return new SuccessDataResult<List<ListAdditionalServiceDto>>(response);
+	@Transactional
+	public Result create(CreateAdditionalServiceRequest createAdditionalServiceRequest){
+		
+		checkAdditionalServiceNameExists(createAdditionalServiceRequest.getAdditionalServiceName());
+		
+		AdditionalService additionalService = this.modelMapperService.forRequest()
+			.map(createAdditionalServiceRequest, AdditionalService.class);
+		this.additionalServiceDao.save(additionalService);
+		
+		return new SuccessDataResult<CreateAdditionalServiceRequest>(createAdditionalServiceRequest,
+			Messages.ADDITIONALSERVICEADDED + additionalService.getAdditionalServiceName());
 	}
 
 	@Override
-	public Result add(CreateAdditionalServiceRequest createAdditionalServiceRequest) throws BusinessException {
-		AdditionalService additionalService = modelMapperService.forRequest().map(createAdditionalServiceRequest,
-				AdditionalService.class);
-
-//		additionalService.setAdditionalId(0);
-		additionalServiceDao.save(additionalService);
-		return new SuccessResult("additionalService.Added");
+	public DataResult<List<ListAdditionalServiceDto>> listAll(){
+		
+		Sort sort = Sort.by(Direction.ASC, "additionalServiceId");
+		List<AdditionalService> additionalServices = this.additionalServiceDao.findAll(sort);		
+		List<ListAdditionalServiceDto> listAdditionalServiceDtos = additionalServices.stream()
+			.map(additionalService -> this.modelMapperService.forDto()
+			.map(additionalService, ListAdditionalServiceDto.class))
+			.collect(Collectors.toList());
+		
+		return new SuccessDataResult<List<ListAdditionalServiceDto>>(listAdditionalServiceDtos,
+			Messages.ADDITIONALSERVICESLISTED);
 	}
 
 	@Override
-	public DataResult<AdditionalServiceDto> getById(int additionalServiceId) throws BusinessException {
-		AdditionalService result = additionalServiceDao.getById(additionalServiceId);
-		if (Objects.nonNull(result)) {
-			AdditionalServiceDto response = modelMapperService.forDto().map(result, AdditionalServiceDto.class);
-			return new SuccessDataResult<AdditionalServiceDto>(response);
+	public DataResult<AdditionalServiceDto> getById(int additionalServiceId){
+		
+		checkAdditionalServiceIdExists(additionalServiceId);
+		
+		AdditionalService additionalService = this.additionalServiceDao.getById(additionalServiceId);
+		AdditionalServiceDto additionalServiceDto = this.modelMapperService.forDto()
+			.map(additionalService, AdditionalServiceDto.class);
+		
+		return new SuccessDataResult<AdditionalServiceDto>(additionalServiceDto,
+			Messages.ADDITIONALSERVICEGETTEDBYID);
+	}
+
+	@Override
+	public DataResult<List<ListAdditionalServiceDto>> getAllSorted(Direction direction){
+		
+		Sort sort = Sort.by(direction, "additionalServiceName");
+		List<AdditionalService> additionalServices = this.additionalServiceDao.findAll(sort);
+		List<ListAdditionalServiceDto> listAdditionalServiceDtos = additionalServices.stream()
+			.map(additionalService -> this.modelMapperService.forDto()
+			.map(additionalService, ListAdditionalServiceDto.class))
+			.collect(Collectors.toList());
+		
+		return new SuccessDataResult<List<ListAdditionalServiceDto>>(listAdditionalServiceDtos,
+			Messages.DATALISTEDIN + direction.toString() + Messages.ORDER);
+	}
+
+	@Override
+	public DataResult<List<ListAdditionalServiceDto>> getAllPaged(int pageNo, int pageSize){
+		
+		checkPageNoAndPageSize(pageNo, pageSize);
+		
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		List<AdditionalService> additionalServices = this.additionalServiceDao.findAll(pageable).getContent();
+		List<ListAdditionalServiceDto> listAdditionalServiceDtos = additionalServices.stream()
+			.map(additionalService -> this.modelMapperService.forDto()
+			.map(additionalService, ListAdditionalServiceDto.class))
+			.collect(Collectors.toList());
+		
+		return new SuccessDataResult<List<ListAdditionalServiceDto>>(listAdditionalServiceDtos,
+			Messages.DATAINPAGE + Integer.toString(pageNo) + Messages.ISLISTEDWITHDATASIZE
+			+ Integer.toString(pageSize));
+	}
+
+	@Override
+	public Result delete(int additionalServiceId){
+		
+		checkAdditionalServiceIdExists(additionalServiceId);
+	
+		String additionalServiceNameBefore = this.additionalServiceDao
+			.findByAdditionalServiceId(additionalServiceId).getAdditionalServiceName();
+		this.additionalServiceDao.deleteById(additionalServiceId);
+		
+		return new SuccessResult(Messages.ADDITIONALSERVICEDELETED + additionalServiceNameBefore);
+	}
+	
+	@Override
+	public List<AdditionalService> getByRentalId(int rentalId){
+		
+		List<AdditionalService> additionalServices = this.additionalServiceDao.getAllByRental(rentalId);
+			
+		
+		return additionalServices;
+	}
+
+	private void checkAdditionalServiceNameExists(String additionalServiceName){
+		
+		if (this.additionalServiceDao.existsByAdditionalServiceName(additionalServiceName)) {
+			
+			throw new BusinessException(Messages.ADDITIONALSERVICEEXISTS + additionalServiceName);
 		}
-		throw new BusinessException("The additional service was not found!");
 	}
 
-	@Override
-	public Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest) throws BusinessException {
-		AdditionalService additionalService = modelMapperService.forRequest().map(updateAdditionalServiceRequest,
-				AdditionalService.class);
-//		AdditionalService additionalService = additionalServiceDao.getById(updateAdditionalServiceRequest.getAdditionalId());
-		isExistById(updateAdditionalServiceRequest.getAdditionalId());
-//		additionalService.setDailyPrice(updateAdditionalServiceRequest.getDailyPrice());
-//		additionalService.setDescription(updateAdditionalServiceRequest.getDescription());
-//		additionalService.setName(updateAdditionalServiceRequest.getName());
-		additionalServiceDao.save(additionalService);
-		return new SuccessResult("additionalService.Updated");
-	}
-
-	@Override
-	public Result delete(DeleteAdditionalServiceRequest deleteAdditionalServiceRequest) throws BusinessException {
-		isExistById(deleteAdditionalServiceRequest.getAdditionalId());
-		additionalServiceDao.deleteById(deleteAdditionalServiceRequest.getAdditionalId());
-		return new SuccessResult();
-	}
-
-	private boolean isExistById(int additionalServiceId) throws BusinessException {
-		if (additionalServiceDao.existsById(additionalServiceId)) {
-			return true;
+	private void checkAdditionalServiceIdExists(int additionalServiceId){
+		
+		if (!this.additionalServiceDao.existsById(additionalServiceId)) {
+			
+			throw new BusinessException(Messages.ADDITIONALSERVICENOTFOUND);
 		}
-		throw new BusinessException("The brand with id : " + additionalServiceId + " was not found!");
 	}
-
+	
+	private void checkPageNoAndPageSize(int pageNo, int pageSize) {
+		
+		if(pageNo <= 0) {
+			
+			throw new BusinessException(Messages.PAGENOCANNOTLESSTHANZERO);
+			
+		}else if(pageSize <= 0) {
+			
+			throw new BusinessException(Messages.PAGESIZECANNOTLESSTHANZERO);
+		}
+	}
 }
