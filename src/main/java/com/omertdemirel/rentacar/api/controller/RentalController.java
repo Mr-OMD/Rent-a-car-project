@@ -18,7 +18,6 @@ import com.omertdemirel.rentacar.business.abstracts.RentalService;
 import com.omertdemirel.rentacar.business.dtos.ListRentalDto;
 import com.omertdemirel.rentacar.business.dtos.RentalDto;
 import com.omertdemirel.rentacar.business.request.CreateRentalRequest;
-import com.omertdemirel.rentacar.business.request.DeleteRentalRequest;
 import com.omertdemirel.rentacar.business.request.UpdateRentalRequest;
 import com.omertdemirel.rentacar.core.utilities.results.DataResult;
 import com.omertdemirel.rentacar.core.utilities.results.Result;
@@ -35,29 +34,40 @@ public class RentalController {
 		this.rentalService = rentalService;
 	}
 
-	@GetMapping("/getAll")
-	public DataResult<List<ListRentalDto>> getAll() {
-		return rentalService.getAll();
+	@PutMapping("/update")
+	public Result update(@RequestBody @Valid UpdateRentalRequest updateRentalRequest){
+		
+		return this.rentalService.update(updateRentalRequest);
 	}
 
-	@GetMapping("/get/{id}")
-	public DataResult<RentalDto> get(@RequestParam int id) {
-		return rentalService.getById(id);
+	@PostMapping("/create")
+	public Result create(@RequestBody @Valid CreateRentalRequest createRentalRequest){
+		
+		return this.rentalService.create(createRentalRequest);
 	}
 
-	@PostMapping("/save")
-	public Result add(@RequestBody @Valid CreateRentalRequest createRentalRequest) {
-		return rentalService.add(createRentalRequest);
+	@GetMapping("/listAll")
+	public DataResult<List<ListRentalDto>> listAll(){
+		
+		return this.rentalService.listAll();
+	}
+
+	@GetMapping("/getById")
+	public DataResult<RentalDto> getById(@RequestParam int rentalId){
+		
+		return this.rentalService.getById(rentalId);
+	}
+
+	@GetMapping("/getAllPaged")
+	DataResult<List<ListRentalDto>> getAllPaged(int pageNo, int pageSize){
+		
+		return this.rentalService.getAllPaged(pageNo, pageSize);
 	}
 
 	@DeleteMapping("/delete")
-	public Result delete(@RequestBody @Valid DeleteRentalRequest deleteRentalRequest) {
-		return rentalService.delete(deleteRentalRequest);
-	}
-
-	@PutMapping("/update")
-	public Result delete(@RequestBody @Valid UpdateRentalRequest updateRentalRequest) {
-		return rentalService.update(updateRentalRequest);
+	public Result delete(@RequestParam int rentalId){
+		
+		return this.rentalService.delete(rentalId);
 	}
 
 }

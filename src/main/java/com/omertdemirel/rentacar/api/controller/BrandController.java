@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,6 @@ import com.omertdemirel.rentacar.business.abstracts.BrandService;
 import com.omertdemirel.rentacar.business.dtos.BrandDto;
 import com.omertdemirel.rentacar.business.dtos.ListBrandDto;
 import com.omertdemirel.rentacar.business.request.CreateBrandRequest;
-import com.omertdemirel.rentacar.business.request.DeleteBrandRequest;
 import com.omertdemirel.rentacar.business.request.UpdateBrandRequest;
 import com.omertdemirel.rentacar.core.utilities.results.DataResult;
 import com.omertdemirel.rentacar.core.utilities.results.Result;
@@ -34,28 +34,45 @@ public class BrandController {
 		this.brandService = brandService;
 	}
 
-	@GetMapping("/getall")
-	public DataResult<List<ListBrandDto>> getAll() {
-		return brandService.getAll();
+	@PutMapping("/update")
+	public Result update(@RequestBody @Valid UpdateBrandRequest updateBrandRequest){
+		
+		return this.brandService.update(updateBrandRequest);
 	}
 
-	@GetMapping("/get/{id}")
-	public DataResult<BrandDto> get(@RequestParam int id) {
-		return brandService.getById(id);
+	@PostMapping("/create")
+	public Result create(@RequestBody @Valid CreateBrandRequest createBrandRequest){
+		
+		return this.brandService.create(createBrandRequest);
 	}
 
-	@PostMapping("/save")
-	public Result add(@RequestBody @Valid CreateBrandRequest createBrandRequest) {
-		return brandService.add(createBrandRequest);
+	@GetMapping("/listAll")
+	public DataResult<List<ListBrandDto>> listAll(){
+		
+		return this.brandService.listAll();
+	}
+
+	@GetMapping("/getById")
+	public DataResult<BrandDto> getById(@RequestParam int brandId){
+		
+		return this.brandService.getById(brandId);
+	}
+
+	@GetMapping("/getAllSorted")
+	public DataResult<List<ListBrandDto>> getAllSorted(Sort.Direction direction){
+		
+		return this.brandService.getAllSorted(direction);
+	}
+
+	@GetMapping("/getAllPaged")
+	public DataResult<List<ListBrandDto>> getAllPaged(int pageNo, int pageSize){
+		
+		return this.brandService.getAllPaged(pageNo, pageSize);
 	}
 
 	@DeleteMapping("/delete")
-	public Result delete(@RequestBody @Valid DeleteBrandRequest deleteBrandRequest) {
-		return brandService.delete(deleteBrandRequest);
-	}
-
-	@PutMapping("/update")
-	public Result update(@RequestBody @Valid UpdateBrandRequest updateBrandRequest) {
-		return brandService.update(updateBrandRequest);
+	public Result delete(@RequestParam int brandId){
+		
+		return this.brandService.delete(brandId);
 	}
 }

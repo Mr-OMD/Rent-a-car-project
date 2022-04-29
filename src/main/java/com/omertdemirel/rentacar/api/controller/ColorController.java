@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,6 @@ import com.omertdemirel.rentacar.business.abstracts.ColorService;
 import com.omertdemirel.rentacar.business.dtos.ColorDto;
 import com.omertdemirel.rentacar.business.dtos.ListColorDto;
 import com.omertdemirel.rentacar.business.request.CreateColorRequest;
-import com.omertdemirel.rentacar.business.request.DeleteColorRequest;
 import com.omertdemirel.rentacar.business.request.UpdateColorRequest;
 import com.omertdemirel.rentacar.core.utilities.results.DataResult;
 import com.omertdemirel.rentacar.core.utilities.results.Result;
@@ -34,29 +34,44 @@ public class ColorController {
 		this.colorService = colorService;
 	}
 
-	@GetMapping("/getall")
-	public DataResult<List<ListColorDto>> getAll() {
-		return colorService.getAll();
+	@PutMapping("/update")
+	public Result update(@RequestBody @Valid UpdateColorRequest updateColorRequest){
+		
+		return this.colorService.update(updateColorRequest);
 	}
 
-	@GetMapping("/get/{id}")
-	public DataResult<ColorDto> get(@RequestParam int id) {
-		return colorService.getById(id);
+	@PostMapping("/create")
+	public Result create(@RequestBody @Valid CreateColorRequest createColorRequest){
+		
+		return this.colorService.create(createColorRequest);
 	}
 
-	@PostMapping("/save")
-	public Result add(@RequestBody @Valid CreateColorRequest createColorRequest) {
-		return colorService.add(createColorRequest);
+	@GetMapping("/listAll")
+	public DataResult<List<ListColorDto>> listAll(){
+		return this.colorService.listAll();
+	}
+
+	@GetMapping("/getById")
+	public DataResult<ColorDto> getById(@RequestParam int colorId){
+		
+		return this.colorService.getById(colorId);
+	}
+
+	@GetMapping("/getAllSorted")
+	DataResult<List<ListColorDto>> getAllSorted(Sort.Direction direction){
+		return this.colorService.getAllSorted(direction);
+	}
+
+	@GetMapping("/getAllPaged")
+	DataResult<List<ListColorDto>> getAllPaged(int pageNo, int pageSize){
+		
+		return this.colorService.getAllPaged(pageNo, pageSize);
 	}
 
 	@DeleteMapping("/delete")
-	public Result delete(@RequestBody @Valid DeleteColorRequest deleteColorRequest) {
-		return colorService.delete(deleteColorRequest);
-	}
-
-	@PutMapping("/update")
-	public Result update(@RequestBody @Valid UpdateColorRequest updateColorRequest) {
-		return colorService.update(updateColorRequest);
+	public Result delete(@RequestParam int colorId){
+		
+		return this.colorService.delete(colorId);
 	}
 
 }

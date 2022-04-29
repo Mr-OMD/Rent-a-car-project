@@ -17,7 +17,6 @@ import com.omertdemirel.rentacar.business.abstracts.CarMaintenanceService;
 import com.omertdemirel.rentacar.business.dtos.CarMaintenanceDto;
 import com.omertdemirel.rentacar.business.dtos.ListCarMaintenanceDto;
 import com.omertdemirel.rentacar.business.request.CreateCarMaintenanceRequest;
-import com.omertdemirel.rentacar.business.request.DeleteCarMaintenanceRequest;
 import com.omertdemirel.rentacar.business.request.UpdateCarMaintenanceRequest;
 import com.omertdemirel.rentacar.core.utilities.results.DataResult;
 import com.omertdemirel.rentacar.core.utilities.results.Result;
@@ -33,34 +32,46 @@ public class CarMaintenanceController {
 		this.carMaintenanceService = carMaintenanceService;
 	}
 
-	@GetMapping("/getAll")
-	public DataResult<List<ListCarMaintenanceDto>> getAll() {
-		return carMaintenanceService.getAll();
+	@PutMapping("/update")
+	public Result update(@RequestBody @Valid UpdateCarMaintenanceRequest updateCarMaintenanceRequest){
+		
+		return this.carMaintenanceService.update(updateCarMaintenanceRequest);
 	}
 
-	@GetMapping("/get/{id}")
-	public DataResult<CarMaintenanceDto> get(@RequestParam int id) {
-		return carMaintenanceService.getById(id);
+	@PostMapping("/create")
+	public Result create(@RequestBody @Valid CreateCarMaintenanceRequest createCarMaintenanceRequest){
+		
+		return this.carMaintenanceService.create(createCarMaintenanceRequest);
 	}
 
-	@PostMapping("/save")
-	public Result add(@RequestBody @Valid CreateCarMaintenanceRequest createCarMaintenanceRequest) {
-		return carMaintenanceService.add(createCarMaintenanceRequest);
+	@GetMapping("/listAll")
+	public DataResult<List<ListCarMaintenanceDto>> listAll(){
+		
+		return this.carMaintenanceService.listAll();
+	}
+
+	@GetMapping("/getByCarMaintenanceId")
+	public DataResult<CarMaintenanceDto> getById(@RequestParam int carMaintenanceId){
+		
+		return this.carMaintenanceService.getById(carMaintenanceId);
+	}
+
+	@GetMapping("/getByCarId")
+	public DataResult<List<ListCarMaintenanceDto>> getByCarId(@RequestParam int carId){
+		
+		return this.carMaintenanceService.getByCarId(carId);
+	}
+
+	@GetMapping("/getAllPaged")
+	DataResult<List<ListCarMaintenanceDto>> getAllPaged(int pageNo, int pageSize){
+		
+		return this.carMaintenanceService.getAllPaged(pageNo, pageSize);
 	}
 
 	@DeleteMapping("/delete")
-	public Result delete(@RequestBody @Valid DeleteCarMaintenanceRequest deleteCarMaintenanceRequest) {
-		return carMaintenanceService.delete(deleteCarMaintenanceRequest);
-	}
-
-	@PutMapping("/update")
-	public Result delete(@RequestBody @Valid UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
-		return carMaintenanceService.update(updateCarMaintenanceRequest);
-	}
-
-	@GetMapping("/getAllByCar/{id}")
-	public DataResult<List<ListCarMaintenanceDto>> getAllByCar(@RequestParam int id) {
-		return carMaintenanceService.getAllByCar(id);
+	public Result delete(@RequestParam int carMaintenanceId){
+		
+		return this.carMaintenanceService.delete(carMaintenanceId);
 	}
 
 }
