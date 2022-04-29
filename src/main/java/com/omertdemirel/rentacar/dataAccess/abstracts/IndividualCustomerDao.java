@@ -9,9 +9,9 @@ import com.omertdemirel.rentacar.entities.concretes.IndividualCustomer;
 @Repository
 public interface IndividualCustomerDao extends JpaRepository<IndividualCustomer, Integer> {
 	
-	boolean existsByNationalIdentity(String nationalIdentity);
+	boolean existsByNationalId(String nationalId);
 	
-	IndividualCustomer getByNationalIdentity(String nationalIdentity);
+	IndividualCustomer getByNationalId(String nationalId);
 	
 	IndividualCustomer getByFirstname(String firstname);
 	
