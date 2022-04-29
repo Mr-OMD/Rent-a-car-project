@@ -44,7 +44,7 @@ public class CustomerManager implements CustomerService{
 	@Override
 	public void checkEmailExists(String email) {
 		
-		if(!this.customerDao.existsByEmail(email)) {
+		if(this.customerDao.existsByEmail(email)) {
 			
 			throw new BusinessException(Messages.EMAILEXISTS);
 		}
