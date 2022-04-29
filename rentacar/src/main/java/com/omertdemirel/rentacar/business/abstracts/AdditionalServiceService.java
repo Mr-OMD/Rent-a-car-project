@@ -2,26 +2,31 @@ package com.omertdemirel.rentacar.business.abstracts;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
+
 import com.omertdemirel.rentacar.business.dtos.AdditionalServiceDto;
 import com.omertdemirel.rentacar.business.dtos.ListAdditionalServiceDto;
 import com.omertdemirel.rentacar.business.request.CreateAdditionalServiceRequest;
-import com.omertdemirel.rentacar.business.request.DeleteAdditionalServiceRequest;
 import com.omertdemirel.rentacar.business.request.UpdateAdditionalServiceRequest;
-import com.omertdemirel.rentacar.core.utilities.exceptions.BusinessException;
 import com.omertdemirel.rentacar.core.utilities.results.DataResult;
 import com.omertdemirel.rentacar.core.utilities.results.Result;
+import com.omertdemirel.rentacar.entities.concretes.AdditionalService;
 
 public interface AdditionalServiceService {
 
-	DataResult<List<ListAdditionalServiceDto>> getAll();
+	Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest);
 
-	DataResult<List<ListAdditionalServiceDto>> getAllByRentId(int rentId);
+	Result create(CreateAdditionalServiceRequest createAdditionalServiceRequest);
+	
+	Result delete(int additionalServiceId);
 
-	DataResult<AdditionalServiceDto> getById(int additionalServiceId) throws BusinessException;
+	DataResult<List<ListAdditionalServiceDto>> listAll();
 
-	Result add(CreateAdditionalServiceRequest createAdditionalServiceRequest) throws BusinessException;
+	DataResult<AdditionalServiceDto> getById(int additionalServiceId);
 
-	Result delete(DeleteAdditionalServiceRequest deleteAdditionalServiceRequest) throws BusinessException;
+	DataResult<List<ListAdditionalServiceDto>> getAllSorted(Sort.Direction direction);
 
-	Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest) throws BusinessException;
+	DataResult<List<ListAdditionalServiceDto>> getAllPaged(int pageNo, int pageSize);
+
+	List<AdditionalService> getByRentalId(int rentalId);
 }

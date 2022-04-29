@@ -12,16 +12,20 @@ import com.omertdemirel.rentacar.core.utilities.results.Result;
 
 public interface CarMaintenanceService {
 
-	DataResult<List<ListCarMaintenanceDto>> getAll();
-
-	DataResult<CarMaintenanceDto> getById(int id);
-
-	Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest);
-
 	Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest);
 
-	Result delete(DeleteCarMaintenanceRequest deleteCarMaintenanceRequest);
+	Result create(CreateCarMaintenanceRequest createCarMaintenanceRequest);
 	
-	DataResult<List<ListCarMaintenanceDto>> getAllByCar(int id);
+	Result delete(int carMaintenanceId);
+
+	DataResult<List<ListCarMaintenanceDto>> listAll();
+
+	DataResult<CarMaintenanceDto> getById(int carMaintenanceId);
+
+	DataResult<List<ListCarMaintenanceDto>> getAllPaged(int pageNo, int pageSize);
+	
+	DataResult<List<ListCarMaintenanceDto>> getByCarId(int carId);
+	
+	void checkCarAlreadyMaintenanced(int carId);
 
 }

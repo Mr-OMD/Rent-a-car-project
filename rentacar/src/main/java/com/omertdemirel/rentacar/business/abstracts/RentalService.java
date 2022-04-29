@@ -13,17 +13,17 @@ import com.omertdemirel.rentacar.core.utilities.results.Result;
 
 public interface RentalService {
 
-	DataResult<List<ListRentalDto>> getAll();
-
-	DataResult<RentalDto> getById(int id);
-
-	Result add(CreateRentalRequest createRentalRequest);
-
 	Result update(UpdateRentalRequest updateRentalRequest);
 
-	Result delete(DeleteRentalRequest deleteRentalRequest);
+	Result create(CreateRentalRequest createRentalRequest);
+	
+	Result delete(int rentalId);
 
-	DataResult<List<ListRentalDto>> getAllByCar(int id) throws BusinessException;
+	DataResult<List<ListRentalDto>> listAll();
 
-	boolean isCarAlreadyRented(int carId);
+	DataResult<RentalDto> getById(int rentalId);
+
+	DataResult<List<ListRentalDto>> getAllPaged(int pageNo, int pageSize);
+
+	void checkCarAlreadyRented(int carId);
 }

@@ -15,18 +15,18 @@ import com.omertdemirel.rentacar.core.utilities.results.Result;
 
 public interface IndividualCustomerService {
 
-	Result update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest) throws BusinessException;
+	Result update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest);
 
-	Result create(CreateIndividualCustomerRequest createIndividualCustomerRequest) throws BusinessException;
+	Result create(CreateIndividualCustomerRequest createIndividualCustomerRequest);
+	
+	Result delete(int individualCustomerId);
 
-	Result delete(DeleteIndividualCustomerRequest deleteIndividualCustomerRequest) throws BusinessException;
+	DataResult<List<ListIndividualCustomerDto>> listAll();
 
-	DataResult<IndividualCustomerDto> getById(int id) throws BusinessException;
+	DataResult<IndividualCustomerDto> getByIndividualCustomerId(int individualCustomerId);
 
-	DataResult<List<ListIndividualCustomerDto>> getAllSorted(Sort.Direction direction) throws BusinessException;
+	DataResult<List<ListIndividualCustomerDto>> getAllSorted(Sort.Direction direction);
 
-	DataResult<List<ListIndividualCustomerDto>> getAllPaged(int pageNo, int pageSize) throws BusinessException;
-
-	DataResult<List<ListIndividualCustomerDto>> listAll() throws BusinessException;
+	DataResult<List<ListIndividualCustomerDto>> getAllPaged(int pageNo, int pageSize);
 
 }
