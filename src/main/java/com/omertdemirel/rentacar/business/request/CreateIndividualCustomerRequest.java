@@ -19,7 +19,7 @@ public class CreateIndividualCustomerRequest {
 	@NotEmpty
 	@NotBlank
 	@Size(min = 11, max = 11)
-	private String nationalIdentity;
+	private String nationalId;
 
 	@NotNull
 	@NotEmpty
