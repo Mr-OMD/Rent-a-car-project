@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvoiceDto {
-												//RENTAL SORUNU???
+												//RENTAL SORUNU???  INVOİCE SORUNU???
 	private String invoiceNumber;
 	
 	private LocalDate createDate;
