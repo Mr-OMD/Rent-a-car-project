@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @PrimaryKeyJoinColumn(name = "user_id")
 public class IndividualCustomer extends Customer {
 	
-	@Column(name = "national_identity", unique = true)
+	@Column(name = "national_id", unique = true)
 	private String nationalId;
 
 	@Column(name = "firstname")
