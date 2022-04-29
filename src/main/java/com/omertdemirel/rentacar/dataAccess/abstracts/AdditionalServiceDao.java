@@ -9,8 +9,10 @@ import com.omertdemirel.rentacar.entities.concretes.AdditionalService;
 @Repository
 public interface AdditionalServiceDao extends JpaRepository<AdditionalService, Integer> {
 
-	List<AdditionalService> getAllByRental(int rentalId); //findAllByAdditionalServiceRental_RentalId
-
+	//List<AdditionalService> getAllByRental(int rentalId); findAllByAdditionalServiceRental_RentalId
+	
+	List<AdditionalService> findAllByAdditionalServiceRental_RentalId(int rentalId);
+	
 	boolean existsByAdditionalServiceName(String name);
 	
 	AdditionalService findByAdditionalServiceId(int id);
