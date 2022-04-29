@@ -219,10 +219,12 @@ public class RentalManager implements RentalService {
 			UpdateCarRequest updateCarRequest = this.modelMapperService.forRequest().map(car, UpdateCarRequest.class); 
 			this.carService.update(updateCarRequest);
 			
-		}else {
-			
-			throw new BusinessException(Messages.RENTALCARKILOMETER);
 		}
+//		else {
+//			//System.out.println(car.getKilometerOfCar());
+//			//System.out.println(updateRentalRequest.getReturnKilometer()); // HATA VAR ÇÖZÜLECEK
+//			throw new BusinessException(Messages.RENTALCARKILOMETER);
+//		}
 	}
 	
 	private void delayedDelivery(UpdateRentalRequest updateRentalRequest, Rental rental, RentalDto rentalDto) {
