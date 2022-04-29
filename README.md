@@ -1,6 +1,5 @@
 # Rent-a-car-project
-
-# Rent a car project for Turkcell Camp Program
+*Rent a car project for Turkcell Camp Program*
 
 You should run query in cities.txt to add cities.
 Don't forget to edit [application.properties](https://github.com/Mr-OMD/Rent-a-car-project/blob/master/src/main/resources/application.properties) according to your own system.
