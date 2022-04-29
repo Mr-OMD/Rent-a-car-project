@@ -67,8 +67,8 @@ public class IndividualCustomerManager implements IndividualCustomerService{
 		
 		LocalDate date = LocalDate.now();
 		
-		checkIndividualIdentityNoContainsLetter(createIndividualCustomerRequest.getNationalIdentity());
-		checkNationalIdentityExists(createIndividualCustomerRequest.getNationalIdentity());
+		checkIndividualIdentityNoContainsLetter(createIndividualCustomerRequest.getNationalId());
+		checkNationalIdExists(createIndividualCustomerRequest.getNationalId());
 		this.customerService.checkEmailExists(createIndividualCustomerRequest.getEmail());
 		
 		IndividualCustomer individualCustomer = this.modelMapperService.forRequest()
@@ -147,11 +147,11 @@ public class IndividualCustomerManager implements IndividualCustomerService{
 		return new SuccessResult(Messages.INDIVIDUALCUSTOMERDELETED + individualCustomerNameBefore);
 	}
 	
-	private void checkNationalIdentityExists(String nationalIdentity){
+	private void checkNationalIdExists(String nationalId){
 		
-		if(this.individualCustomerDao.existsByNationalIdentity(nationalIdentity)) {
+		if(this.individualCustomerDao.existsByNationalId(nationalId)) {
 			
-			throw new BusinessException(Messages.INDIVIDUALCUSTOMERIDENTITYEXISTS + nationalIdentity);
+			throw new BusinessException(Messages.INDIVIDUALCUSTOMERIDENTITYEXISTS + nationalId);
 		}
 	}
 	
